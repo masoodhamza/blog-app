@@ -5,24 +5,25 @@ const App = () => {
   const [posts, setPosts] = useState(null);
 
   useEffect(async () => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((json) => setPosts(json));
+    try {
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((response) => response.json())
+        .then((json) => setPosts(json));
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
     <div className="App">
-      <h1>Fetch data from API</h1>
-      {posts && (
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <strong>{post.title}</strong> <br />
-              {post.body}
-            </li>
-          ))}
-        </ul>
-      )}
+      <h1>Fetching data from API</h1>
+      {posts &&
+        posts.map((post) => (
+          <div className="card" key={post.id}>
+            <h2 className="title">{post.title}</h2>
+            <p className="body">{post.body}</p>
+          </div>
+        ))}
     </div>
   );
 };
