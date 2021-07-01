@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 const App = () => {
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
-  useEffect(async () => {
-    try {
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then((response) => response.json())
-        .then((json) => setPosts(json));
-    } catch (error) {
-      console.log(error);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetch("https://jsonplaceholder.typicode.com/posts")
+          .then((response) => response.json())
+          .then((json) => setPosts(json));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
